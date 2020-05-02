@@ -6,10 +6,13 @@ import NavBar from './NavBar';
 import AboutPage from '../pages/AboutPage';
 import AddHomePage from '../pages/AddHomePage';
 import AddPost from './AddPost';
+import Modal from './Modal';
 
 export default class App extends Component {
   state = {
     posts: [],
+    EditModal: {},
+    IsEditModalOpen: false,
   };
 
   // Get Post
@@ -32,6 +35,15 @@ export default class App extends Component {
         res.data.id = uuidv4();
         this.setState(prevState => ({ posts: [res.data, ...prevState.posts] }));
       });
+  };
+
+  openModal = () => this.setState({ IsEditModalOpen: true });
+
+  closeModal = () => this.setState({ IsEditModalOpen: false });
+
+  handleEdit = ({ id, title, body }) => {
+    this.setState({ EditModal: { id, title, body } });
+    this.openModal();
   };
 
   // Delete Post
@@ -61,7 +73,7 @@ export default class App extends Component {
   };
 
   render() {
-    const { posts } = this.state;
+    const { posts, EditModal, IsEditModalOpen } = this.state;
     return (
       <Router>
         <div className="App">
@@ -77,12 +89,21 @@ export default class App extends Component {
                     {...props}
                     posts={posts}
                     onDelete={this.handleDeletePost}
+                    onEdit={this.handleEdit}
                   />
                 </React.Fragment>
               )}
             />
             <Route path="/about" component={AboutPage} />
           </Switch>
+          {IsEditModalOpen && (
+            <Modal
+              key={EditModal.id}
+              post={EditModal}
+              IsEditModalOpen={IsEditModalOpen}
+              onCloseModal={this.closeModal}
+            />
+          )}
         </div>
       </Router>
     );
