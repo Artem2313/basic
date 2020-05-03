@@ -1,9 +1,10 @@
 import React from 'react';
+import { Container } from './AboutPageStyles';
 
 const AboutPage = () => (
-  <div>
+  <Container>
     <p>This is About Page</p>
-  </div>
+  </Container>
 );
 
 export default AboutPage;

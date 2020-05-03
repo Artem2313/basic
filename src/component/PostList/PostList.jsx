@@ -1,9 +1,9 @@
 import React from 'react';
-import Post from '../component/Post';
+import Post from '../Post/Post';
 
-const AddHomePage = ({ posts, onDelete, onEdit }) =>
+const PostList = ({ posts, onDelete, onEdit }) =>
   posts.map(post => (
     <Post key={post.id} post={post} onDelete={onDelete} onEdit={onEdit} />
   ));
 
-export default AddHomePage;
+export default PostList;

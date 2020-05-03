@@ -1,26 +1,15 @@
 import React, { Component, createRef } from 'react';
-import styled from 'styled-components';
-
-const BackDropCss = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.2);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-`;
-
-const ModalCss = styled.div`
-  padding: 16px;
-  max-width: 480px;
-  width: 100%;
-  min-height: 320px;
-  background-color: #fff;
-`;
+import PropTypes from 'prop-types';
+import {
+  BackDropCss,
+  ModalCss,
+  Form,
+  Title,
+  Body,
+  FlexDiv,
+  Button,
+  Submit,
+} from './ModalStyles';
 
 export default class Modal extends Component {
   state = {
@@ -73,29 +62,43 @@ export default class Modal extends Component {
 
   render() {
     const { onCloseModal } = this.props;
+    const { title, body } = this.state;
     return (
       <BackDropCss ref={this.backdropRef} onClick={this.handleBackdropClick}>
         <ModalCss>
-          <form onSubmit={this.handleSubmit}>
-            <input
+          <Form onSubmit={this.handleSubmit}>
+            <Title
               type="text"
               name="title"
               onChange={this.handleChange}
-              value={this.state.title}
+              value={title}
             />
-            <textarea
+            <Body
               type="text"
               name="body"
               onChange={this.handleChange}
-              value={this.state.body}
+              value={body}
+              rows="10"
             />
-            <button type="button" onClick={() => onCloseModal()}>
-              Close Modal
-            </button>
-            <input type="submit" value="Submit" />
-          </form>
+            <FlexDiv>
+              <Submit type="submit" value="Submit" />
+              <Button type="button" onClick={() => onCloseModal()}>
+                Close
+              </Button>
+            </FlexDiv>
+          </Form>
         </ModalCss>
       </BackDropCss>
     );
   }
 }
+
+Modal.propTypes = {
+  post: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+  }).isRequired,
+  onCloseModal: PropTypes.func.isRequired,
+  onUpdatePost: PropTypes.func.isRequired,
+};

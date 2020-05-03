@@ -1,68 +1,29 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+How to start?
 
-## Available Scripts
+1. Start server - npm run start:server
+2. Start app - npm start
 
-In the project directory, you can run:
+App architecture
 
-### `npm start`
-
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- db.json acts as a storage for the fake server that hosted on localhost//8000
+- the app is located on default host localhost//3000
+- index js simply renders App.js
+- App.js is located in the component folder. App.js acts as a parent component
+  for all other components. It contains API requests () and handlers to
+  close/open modal, and to EditPost (Edit func gets passed to the Modal
+  Component and Post Component). It also contains all routes. Right now it acts
+  as a "HomePage" also.
+- Navbar contains links to AddHomePage and About
+- About is just an empty page right now (needs to be modified to the
+  page-for-one-post in the nearest future)
+- PostList gets props {posts, onDelete, onEdit} from app, renders list of Posts
+  and gives {posts, onDelete, onEdit} to the Post.
+- Post (Class Componets) receives {posts, onDelete, onEdit} from PostList and
+  creates one Post where a User can Delete and Edit a post and send the data
+  back to App for handling.
+- AddPost (Class Component) component receives onAddPost property, collect data
+  from a User and sends the data back to App for API requests like POST and
+  DELETE.
+- ModalComponent (Class Component) - acts as the "Editor Mode". It receives
+  props (onEdit) and data from App and sends it back to App for PUT request.
+- Styling is not the best, but it's done with styled-components.

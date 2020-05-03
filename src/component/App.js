@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
-// import { v4 as uuidv4 } from 'uuid';
-import NavBar from './NavBar';
-import AboutPage from '../pages/AboutPage';
-import AddHomePage from '../pages/AddHomePage';
-import AddPost from './AddPost';
-import Modal from './Modal';
-import PostPage from '../pages/PostPage';
+import NavBar from './NavBar/NavBar';
+import AboutPage from '../pages/AboutPage/AboutPage';
+import PostList from './PostList/PostList';
+import AddPost from './AddPost/AddPost';
+import Modal from './Modal/Modal';
+
+const LOCAL = 'http://localhost:8000/posts';
 
 export default class App extends Component {
   state = {
@@ -16,41 +16,30 @@ export default class App extends Component {
     IsEditModalOpen: false,
   };
 
+  // API ========================================================================
+
   // Get Post
   componentDidMount() {
-    axios
-      .get('https://jsonplaceholder.typicode.com/posts?_limit=10')
-      .then(res => this.setState({ posts: res.data }));
+    axios.get(LOCAL).then(res => this.setState({ posts: res.data }));
   }
 
   // Create Post
 
   handlePost = ({ title, body }) => {
-    console.log(`Deliverd from ADdPost: `, title, body);
     axios
-      .post('https://jsonplaceholder.typicode.com/posts', {
+      .post(LOCAL, {
         title,
         body,
       })
       .then(res => {
-        // res.data.id = uuidv4();
         this.setState(prevState => ({ posts: [res.data, ...prevState.posts] }));
       });
-  };
-
-  openModal = () => this.setState({ IsEditModalOpen: true });
-
-  closeModal = () => this.setState({ IsEditModalOpen: false });
-
-  handleEdit = ({ id, title, body }) => {
-    this.setState({ EditModal: { id, title, body } });
-    this.openModal();
   };
 
   // Delete Post
 
   handleDeletePost = id => {
-    axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`).then(
+    axios.delete(`${LOCAL}/${id}`).then(
       this.setState(prevState => ({
         posts: [...prevState.posts.filter(post => post.id !== id)],
       })),
@@ -60,17 +49,26 @@ export default class App extends Component {
   // Update Post
 
   handleUpdate = ({ id, data }) => {
-    axios
-      .put(`https://jsonplaceholder.typicode.com/posts/${id}`, data)
-      .then(res => {
-        this.setState(prevState => ({
-          posts: prevState.posts.map(post =>
-            post.id === id
-              ? { ...post, title: res.data.title, body: res.data.body }
-              : post,
-          ),
-        }));
-      });
+    axios.put(`${LOCAL}/${id}`, data).then(res => {
+      this.setState(prevState => ({
+        posts: prevState.posts.map(post =>
+          post.id === id
+            ? { ...post, title: res.data.title, body: res.data.body }
+            : post,
+        ),
+      }));
+    });
+  };
+
+  // Handlers ===================================================
+
+  openModal = () => this.setState({ IsEditModalOpen: true });
+
+  closeModal = () => this.setState({ IsEditModalOpen: false });
+
+  handleEdit = ({ id, title, body }) => {
+    this.setState({ EditModal: { id, title, body } });
+    this.openModal();
   };
 
   render() {
@@ -86,7 +84,7 @@ export default class App extends Component {
               render={props => (
                 <React.Fragment>
                   <AddPost onAddPost={this.handlePost} />
-                  <AddHomePage
+                  <PostList
                     {...props}
                     posts={posts}
                     onDelete={this.handleDeletePost}
@@ -96,7 +94,6 @@ export default class App extends Component {
               )}
             />
             <Route path="/about" component={AboutPage} />
-            <Route path="/:id" component={PostPage} />
           </Switch>
           {IsEditModalOpen && (
             <Modal
