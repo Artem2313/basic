@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import NavBar from './NavBar';
 import AboutPage from '../pages/AboutPage';
 import AddHomePage from '../pages/AddHomePage';
 import AddPost from './AddPost';
 import Modal from './Modal';
+import PostPage from '../pages/PostPage';
 
 export default class App extends Component {
   state = {
@@ -32,7 +33,7 @@ export default class App extends Component {
         body,
       })
       .then(res => {
-        res.data.id = uuidv4();
+        // res.data.id = uuidv4();
         this.setState(prevState => ({ posts: [res.data, ...prevState.posts] }));
       });
   };
@@ -58,14 +59,14 @@ export default class App extends Component {
 
   // Update Post
 
-  handleUpdate = (id, data) => {
+  handleUpdate = ({ id, data }) => {
     axios
       .put(`https://jsonplaceholder.typicode.com/posts/${id}`, data)
       .then(res => {
         this.setState(prevState => ({
           posts: prevState.posts.map(post =>
             post.id === id
-              ? { ...post, title: res.title, body: res.body }
+              ? { ...post, title: res.data.title, body: res.data.body }
               : post,
           ),
         }));
@@ -95,6 +96,7 @@ export default class App extends Component {
               )}
             />
             <Route path="/about" component={AboutPage} />
+            <Route path="/:id" component={PostPage} />
           </Switch>
           {IsEditModalOpen && (
             <Modal
@@ -102,6 +104,7 @@ export default class App extends Component {
               post={EditModal}
               IsEditModalOpen={IsEditModalOpen}
               onCloseModal={this.closeModal}
+              onUpdatePost={this.handleUpdate}
             />
           )}
         </div>

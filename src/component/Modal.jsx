@@ -23,6 +23,12 @@ const ModalCss = styled.div`
 `;
 
 export default class Modal extends Component {
+  state = {
+    id: this.props.post.id,
+    title: this.props.post.title,
+    body: this.props.post.body,
+  };
+
   backdropRef = createRef();
 
   componentDidMount() {
@@ -49,17 +55,45 @@ export default class Modal extends Component {
     this.props.onCloseModal();
   };
 
+  handleChange = e => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+
+    const { onUpdatePost } = this.props;
+    const { title, body, id } = this.state;
+    const data = { title, body };
+    onUpdatePost({ id, data });
+    this.setState({ title: '', body: '' });
+    this.props.onCloseModal();
+  };
+
   render() {
-    const { post, IsEditModalOpen, onCloseModal } = this.props;
+    const { onCloseModal } = this.props;
     return (
       <BackDropCss ref={this.backdropRef} onClick={this.handleBackdropClick}>
         <ModalCss>
-          <input type="text" value={post.title} />
-          <h1>{post.title}</h1>
-          <p>{post.body}</p>
-          <button type="button" onClick={() => onCloseModal()}>
-            Close Modal
-          </button>
+          <form onSubmit={this.handleSubmit}>
+            <input
+              type="text"
+              name="title"
+              onChange={this.handleChange}
+              value={this.state.title}
+            />
+            <textarea
+              type="text"
+              name="body"
+              onChange={this.handleChange}
+              value={this.state.body}
+            />
+            <button type="button" onClick={() => onCloseModal()}>
+              Close Modal
+            </button>
+            <input type="submit" value="Submit" />
+          </form>
         </ModalCss>
       </BackDropCss>
     );
