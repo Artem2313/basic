@@ -32,6 +32,11 @@ const NavBar = () => (
               <MainNavListItemSpan>About</MainNavListItemSpan>
             </Link>
           </MainNavListItem>
+          <MainNavListItem>
+            <Link to="/posts" label="about">
+              <MainNavListItemSpan>Posts</MainNavListItemSpan>
+            </Link>
+          </MainNavListItem>
         </MainNavList>
       </MainNav>
     </Container>

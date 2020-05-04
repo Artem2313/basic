@@ -1,7 +1,7 @@
 {
   "posts": [
     {
-      "title": "Next.js",
+      "title": "Next.jsx",
       "body": "ffsaf122",
       "id": 3
     },
@@ -34,21 +34,6 @@
       "title": "fdsaf",
       "body": "safdas",
       "id": 9
-    },
-    {
-      "title": "sadfdas",
-      "body": "asdfffffffffffffffffffffffffffffffffffffffffffffff safdasg\nasdfadg\nasdgasdg\n\nasdgsadg\nasgasg\nasdgadsg\nasgdasdg",
-      "id": 10
-    },
-    {
-      "title": "Test",
-      "body": "hello\nmy name is Test",
-      "id": 11
-    },
-    {
-      "title": "test123",
-      "body": "test123\n",
-      "id": 12
     }
   ]
 }

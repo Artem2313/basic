@@ -82,11 +82,11 @@ export default class Modal extends Component {
             />
             <FlexDiv>
               <Submit type="submit" value="Submit" />
-              <Button type="button" onClick={() => onCloseModal()}>
-                Close
-              </Button>
             </FlexDiv>
           </Form>
+          <Button type="button" onClick={() => onCloseModal()}>
+            Close
+          </Button>
         </ModalCss>
       </BackDropCss>
     );
