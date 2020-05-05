@@ -22,3 +22,7 @@ export const deletePost = id => {
 export const updatePost = ({ id, data }) => {
   return axios.put(`${url}/${id}`, data);
 };
+
+export const fetchPostWithId = id => {
+  return axios.get(`${url}/${id}`);
+};

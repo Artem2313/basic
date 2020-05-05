@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { Container, Button, FlexDiv } from './PostStyles';
 
 const Post = ({ post: { title, body, id }, onDelete, onEdit }) => (

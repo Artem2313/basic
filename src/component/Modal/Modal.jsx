@@ -35,13 +35,13 @@ export default class Modal extends Component {
       return;
     }
 
-    this.props.onCloseModal();
+    this.props.onHandleModal();
   };
 
   handleKeyPress = e => {
     if (e.code !== 'Escape') return;
 
-    this.props.onCloseModal();
+    this.props.onHandleModal();
   };
 
   handleChange = e => {
@@ -57,11 +57,11 @@ export default class Modal extends Component {
     const data = { title, body };
     onUpdatePost({ id, data });
     this.setState({ title: '', body: '' });
-    this.props.onCloseModal();
+    this.props.onHandleModal();
   };
 
   render() {
-    const { onCloseModal } = this.props;
+    const { onHandleModal } = this.props;
     const { title, body } = this.state;
     return (
       <BackDropCss ref={this.backdropRef} onClick={this.handleBackdropClick}>
@@ -84,7 +84,7 @@ export default class Modal extends Component {
               <Submit type="submit" value="Submit" />
             </FlexDiv>
           </Form>
-          <Button type="button" onClick={() => onCloseModal()}>
+          <Button type="button" onClick={() => onHandleModal()}>
             Close
           </Button>
         </ModalCss>
@@ -99,6 +99,6 @@ Modal.propTypes = {
     body: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
   }).isRequired,
-  onCloseModal: PropTypes.func.isRequired,
+  onHandleModal: PropTypes.func.isRequired,
   onUpdatePost: PropTypes.func.isRequired,
 };
