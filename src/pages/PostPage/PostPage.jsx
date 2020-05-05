@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as API from '../../services/API';
 import Post from '../../component/Post/Post';
 
@@ -27,3 +28,7 @@ export default class PostPage extends Component {
     );
   }
 }
+
+PostPage.propTypes = {
+  history: PropTypes.shape({}).isRequired,
+};

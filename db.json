@@ -1,11 +1,6 @@
 {
   "posts": [
     {
-      "title": "1",
-      "body": "2",
-      "id": 4
-    },
-    {
       "title": "wqr",
       "body": "qwreqwsdsaf",
       "id": 5
@@ -22,11 +17,6 @@
     },
     {
       "title": "fdsaf",
-      "body": "sfa",
-      "id": 8
-    },
-    {
-      "title": "fdsaf",
       "body": "safdas",
       "id": 9
     },
@@ -34,6 +24,11 @@
       "title": "23",
       "body": "23",
       "id": 11
+    },
+    {
+      "title": "цуе",
+      "body": "цуеккуцн",
+      "id": 12
     }
   ]
 }
